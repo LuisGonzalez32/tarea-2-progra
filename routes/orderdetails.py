@@ -18,7 +18,9 @@ def home():
 @login_required
 def homeByOrderId(orderId):
     currentOrder = Order.query.filter_by(id=orderId).first()
-    return render_template("orderDetails/home.html", order=currentOrder, user=current_user)
+    orderDetailList = OrderDetail.query.filter_by(orderId=orderId).all()
+    print(currentOrder, orderDetailList)
+    return render_template("orderDetails/home.html", order=currentOrder, user=current_user, items=orderDetailList)
 
 
 @orderDetails.route("/create", methods=["GET", "POST"])
@@ -33,7 +35,7 @@ def create():
         description = form.description.data
         unitCost = form.unitCost.data
         totalCost = quantity * unitCost
-        currentOrder.TotalSale += totalCost
+        currentOrder.totalSale += totalCost
 
         newOrderDetail = OrderDetail(orderId, quantity, description, unitCost, totalCost)
         db.session.add(newOrderDetail)
@@ -46,7 +48,7 @@ def create():
 @orderDetails.route("/create/<int:orderId>", methods=["GET", "POST"])
 @login_required
 def createByOrderId(orderId):
-    form = OrderDetailCreateForm()
+    form = OrderDetailCreateForm(orderId=orderId)
     if form.validate_on_submit():
         currentOrder = Order.query.filter_by(id=orderId).first()
 
@@ -54,11 +56,11 @@ def createByOrderId(orderId):
         description = form.description.data
         unitCost = form.unitCost.data
         totalCost = quantity * unitCost
-        currentOrder.TotalSale += totalCost
+        currentOrder.totalSale += totalCost
 
         newOrderDetail = OrderDetail(orderId, quantity, description, unitCost, totalCost)
         db.session.add(newOrderDetail)
         db.session.add(currentOrder)
         db.session.commit()
-        return redirect(url_for("orderDetails.home"))
-    return render_template("orderDetails/create.html", form=form)
+        return redirect(url_for("orderDetails.homeByOrderId", orderId=orderId))
+    return render_template("orderDetails/create.html", form=form, user=current_user, orderId=orderId)

@@ -7,7 +7,6 @@ class OrderDetailCreateForm(FlaskForm):
     orderId = IntegerField(
         validators=[
             InputRequired(),
-            Length(min=1),
         ],
         render_kw={"placeholder": "orderId..."},
     )
@@ -15,7 +14,6 @@ class OrderDetailCreateForm(FlaskForm):
     quantity = IntegerField(
         validators=[
             InputRequired(),
-            Length(min=1),
         ],
         render_kw={"placeholder": "quantity..."},
     )

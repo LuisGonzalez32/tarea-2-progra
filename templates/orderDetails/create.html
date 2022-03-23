@@ -10,7 +10,7 @@
 {% endif %}
 <p>please create your order detail here:</p>
 <br>
-<form action="{{ url_for('orderDetails.create') }}" method="post">
+<form action="{{ url_for('orderDetails.createByOrderId', orderId=orderId) }}" method="post">
     {{ form.hidden_tag() }}
     {{ form.orderId.label }}
     {{ form.orderId }}
@@ -20,8 +20,6 @@
     {{ form.quantity }}
     {{ form.unitCost.label }}
     {{ form.unitCost }}
-    {{ form.totalCost.label }}
-    {{ form.totalCost }}
     {{ form.submit }}
 </form>
 

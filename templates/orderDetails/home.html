@@ -20,7 +20,7 @@
 </ul>
 {% endif %}
 <br>
-<a href="{{ url_for('orderDetails.create') }}">create an order detail</a>
+<a href="{{ url_for('orderDetails.createByOrderId', orderId=order.id) }}">create an order detail</a>
 <br>
 <table>
     <thead>
@@ -34,14 +34,16 @@
         </tr>
     </thead>
     <tbody>
+        {% for item in items %}
         <tr>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
+            <td>{{ item.id }}</td>
+            <td>{{ item.orderId }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.description }}</td>
+            <td>{{ item.unitCost }}</td>
+            <td>{{ item.totalCost }}</td>
         </tr>
+        {% endfor %}
     </tbody>
 </table>
 
