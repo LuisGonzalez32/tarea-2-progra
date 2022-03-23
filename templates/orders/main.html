@@ -25,15 +25,18 @@
         </tr>
     </thead>
     <tbody>
+        {% for item in items %}
         <tr>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
-            <td>test</td>
+            <td>{{ item.id }}</td>
+            <td>{{ item.buyer }}</td>
+            <td>{{ item.provider }}</td>
+            <td>{{ item.totalSale }}</td>
+            <td>{{ item.orderCode }}</td>
+            <td>{{ item.date }}</td>
+            <td>{{ item.saleCode }}</td>
+            <td><a href="{{ url_for('orderDetails.homeByOrderId', orderId=item.id) }}">add details</a></td>
         </tr>
+        {% endfor %}
     </tbody>
 </table>
 

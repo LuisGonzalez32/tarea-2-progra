@@ -9,6 +9,13 @@
 <a href="{{ url_for('auth.logout') }}">logout</a>
 {% endif %}
 <p>this is my awesome todolist home</p>
+<br>
+<a href="{{ url_for('orders.ordersMain') }}">orders</a>
+<br>
+<a href="{{ url_for('orderDetails.home') }}">order details</a>
+<br>
+<br>
+
 
 {% for userItem in userList %}
 <a href="{{ url_for('todolist.tasklist', userId=userItem.id) }}">{{ userItem.username }}</a><br>

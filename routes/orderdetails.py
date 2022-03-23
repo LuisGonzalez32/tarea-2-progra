@@ -11,7 +11,14 @@ orderDetails = Blueprint("orderDetails", __name__, url_prefix="/orderDetails")
 @orderDetails.route("/")
 @login_required
 def home():
-    return render_template("orderDetails/home.html")
+    return render_template("orderDetails/home.html", user=current_user)
+
+
+@orderDetails.route("/<int:orderId>")
+@login_required
+def homeByOrderId(orderId):
+    currentOrder = Order.query.filter_by(id=orderId).first()
+    return render_template("orderDetails/home.html", order=currentOrder, user=current_user)
 
 
 @orderDetails.route("/create", methods=["GET", "POST"])
@@ -20,15 +27,38 @@ def create():
     form = OrderDetailCreateForm()
     if form.validate_on_submit():
         orderId = form.orderId.data
-        # currentOrder = Order.query.filter_by(id=orderId)
+        currentOrder = Order.query.filter_by(id=orderId).first()
+
         quantity = form.quantity.data
         description = form.description.data
         unitCost = form.unitCost.data
         totalCost = quantity * unitCost
         currentOrder.TotalSale += totalCost
-        db.session.add(currentorder)
+
         newOrderDetail = OrderDetail(orderId, quantity, description, unitCost, totalCost)
         db.session.add(newOrderDetail)
+        db.session.add(currentOrder)
+        db.session.commit()
+        return redirect(url_for("orderDetails.home"))
+    return render_template("orderDetails/create.html", form=form)
+
+
+@orderDetails.route("/create/<int:orderId>", methods=["GET", "POST"])
+@login_required
+def createByOrderId(orderId):
+    form = OrderDetailCreateForm()
+    if form.validate_on_submit():
+        currentOrder = Order.query.filter_by(id=orderId).first()
+
+        quantity = form.quantity.data
+        description = form.description.data
+        unitCost = form.unitCost.data
+        totalCost = quantity * unitCost
+        currentOrder.TotalSale += totalCost
+
+        newOrderDetail = OrderDetail(orderId, quantity, description, unitCost, totalCost)
+        db.session.add(newOrderDetail)
+        db.session.add(currentOrder)
         db.session.commit()
         return redirect(url_for("orderDetails.home"))
     return render_template("orderDetails/create.html", form=form)

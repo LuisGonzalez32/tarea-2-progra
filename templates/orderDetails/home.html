@@ -10,6 +10,16 @@
 {% endif %}
 <p>review all the orders details</p>
 <br>
+{% if order %}
+<p>order:</p>
+<ul>
+    <li>{{ order.id }}</li>
+    <li>{{ order.buyer }}</li>
+    <li>{{ order.provider }}</li>
+    <li>$ {{ order.totalSale }}</li>
+</ul>
+{% endif %}
+<br>
 <a href="{{ url_for('orderDetails.create') }}">create an order detail</a>
 <br>
 <table>
