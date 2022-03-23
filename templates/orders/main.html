@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+{% block title %}orders home{% endblock %}
+{% block contents %}
+<h1>orders home</h1>
+<br>
+{% if user %}
+<p>Hello, {{user.username}} rank: {{user.rank}}</p>
+<br>
+<a href="{{ url_for('auth.logout') }}">logout</a>
+{% endif %}
+<p>review all the orders</p>
+<br>
+<a href="{{ url_for('orders.create') }}">create an order</a>
+<br>
+<table>
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>buyer</th>
+            <th>provider</th>
+            <th>totalSale</th>
+            <th>orderCode</th>
+            <th>date</th>
+            <th>saleCode</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>test</td>
+            <td>test</td>
+            <td>test</td>
+            <td>test</td>
+            <td>test</td>
+            <td>test</td>
+            <td>test</td>
+        </tr>
+    </tbody>
+</table>
+
+{% endblock %}

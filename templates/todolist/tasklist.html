@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+{% block title %}tasklist{% endblock %}
+{% block contents %}
+<h1>tasklist</h1>
+<br>
+{% if user %}
+<p>Hello, {{user.username}} rank: {{user.rank}}</p>
+<br>
+<a href="{{ url_for('auth.logout') }}">logout</a>
+{% endif %}
+<p>tasklist of user</p>
+<br>
+<a href="{{ url_for('todolist.create', userId=userId) }}">create a task</a>
+<br>
+<table>
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>iduser</th>
+            <th>description</th>
+            <th>status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in tasks %}
+        <tr>
+            <td>{{ task.id }}</td>
+            <td>{{ task.userId }}</td>
+            <td>{{ task.description }}</td>
+            <td>{{ task.status }}</td>
+            <td><a href="{{ url_for('todolist.update', userId=userId, taskId=task.id) }}">update</a></td>
+            <td><a href="{{ url_for('todolist.delete', userId=userId, taskId=task.id) }}">delete</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
