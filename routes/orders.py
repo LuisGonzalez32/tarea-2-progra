@@ -3,7 +3,6 @@ from flask_login import current_user, login_required
 from forms.orderCreateForm import OrderCreateForm
 from utils.db import db
 from models.order import Order
-from models.orderdetail import OrderDetail
 
 orders = Blueprint("orders", __name__, url_prefix="/orders")
 
@@ -27,5 +26,5 @@ def create():
         newOrder = Order(buyer, provider, orderCode, saleCode)
         db.session.add(newOrder)
         db.session.commit()
-        return redirect(url_for("orders.ordersMain"))
+        return redirect(url_for("orders.home"))
     return render_template("orders/create.html", form=form)

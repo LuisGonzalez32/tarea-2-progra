@@ -19,7 +19,6 @@ def home():
 def homeByOrderId(orderId):
     currentOrder = Order.query.filter_by(id=orderId).first()
     orderDetailList = OrderDetail.query.filter_by(orderId=orderId).all()
-    print(currentOrder, orderDetailList)
     return render_template("orderDetails/home.html", order=currentOrder, user=current_user, items=orderDetailList)
 
 
