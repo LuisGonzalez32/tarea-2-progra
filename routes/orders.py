@@ -10,9 +10,9 @@ orders = Blueprint("orders", __name__, url_prefix="/orders")
 
 @orders.route("/")
 @login_required
-def ordersMain():
+def home():
     orderList = Order.query.all()
-    return render_template("orders/main.html", items=orderList, user=current_user)
+    return render_template("orders/home.html", items=orderList, user=current_user)
 
 
 @orders.route("/create", methods=["GET", "POST"])
