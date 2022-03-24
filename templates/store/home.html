@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+{% block title %}store home{% endblock %}
+{% block contents %}
+<h1>store home</h1>
+<br>
+{% if user %}
+<p>Hello, {{user.username}} rank: {{user.rank}}</p>
+<br>
+<a href="{{ url_for('auth.logout') }}">logout</a>
+{% endif %}
+<p>review all products</p>
+<br>
+list of products
+{% endblock %}

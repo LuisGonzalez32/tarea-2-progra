@@ -4,6 +4,7 @@ from routes.auth import auth
 from routes.todolist import todolist
 from routes.orders import orders
 from routes.orderdetails import orderDetails
+from routes.store.store import store
 from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
 from utils.loginManagerService import login_manager
@@ -22,3 +23,4 @@ app.register_blueprint(auth)
 app.register_blueprint(todolist)
 app.register_blueprint(orders)
 app.register_blueprint(orderDetails)
+app.register_blueprint(store)
