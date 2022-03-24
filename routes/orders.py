@@ -3,6 +3,7 @@ from flask_login import current_user, login_required
 from forms.orderCreateForm import OrderCreateForm
 from utils.db import db
 from models.order import Order
+from datetime import date
 
 orders = Blueprint("orders", __name__, url_prefix="/orders")
 
@@ -28,3 +29,17 @@ def create():
         db.session.commit()
         return redirect(url_for("orders.home"))
     return render_template("orders/create.html", form=form)
+
+
+# http://127.0.0.1:5000/orders/finalize/1
+@orders.route("/finalize/<int:id>")
+@login_required
+def finalize(id):
+    currentOrder = Order.query.get(id)
+    currentDate = date.today().isoformat()
+    currentOrder.date = currentDate
+    # db.session.add si ocupas un objeto completamente nuevo hace un insert
+    # db.session.add si ocupas un objeto modificado hace un update
+    db.session.add(currentOrder)
+    db.session.commit()
+    return redirect(url_for("orders.home"))

@@ -35,6 +35,11 @@
             <td>{{ item.date }}</td>
             <td>{{ item.saleCode }}</td>
             <td><a href="{{ url_for('orderDetails.homeByOrderId', orderId=item.id) }}">add details</a></td>
+            <td>
+                {% if item.date == None %}
+                <a href="{{ url_for('orders.finalize', id=item.id) }}">finalize</a>
+                {% endif %}
+            </td>
         </tr>
         {% endfor %}
     </tbody>
