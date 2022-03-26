@@ -41,7 +41,7 @@ def create():
         db.session.add(newOrderDetail)
         db.session.add(currentOrder)
         db.session.commit()
-        return redirect(url_for("orderDetails.home"))
+        return redirect(url_for("orderDetails.all"))
     return render_template("orderDetails/create.html", form=form)
 
 
