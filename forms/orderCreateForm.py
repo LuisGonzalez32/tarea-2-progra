@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, IntegerField
 from wtforms.validators import InputRequired, Length, ValidationError
+from wtforms.fields import DateField
 from models.user import User
 
 
@@ -13,26 +14,25 @@ class OrderCreateForm(FlaskForm):
         render_kw={"placeholder": "buyer"},
     )
 
-    provider = StringField(
+    totalSale = IntegerField(
         validators=[
             InputRequired(),
-            Length(min=3, max=20),
         ],
-        render_kw={"placeholder": "provider"},
+        render_kw={"placeholder": "total"},
     )
 
-    orderCode = IntegerField(
+    discount = IntegerField(
         validators=[
             InputRequired(),
         ],
-        render_kw={"placeholder": "order code"},
+        render_kw={"placeholder": "discount"},
     )
 
-    saleCode = IntegerField(
+    tax = IntegerField(
         validators=[
             InputRequired(),
         ],
-        render_kw={"placeholder": "sale code"},
+        render_kw={"placeholder": "tax"},
     )
 
     submit = SubmitField("create")

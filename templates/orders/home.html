@@ -18,10 +18,10 @@
             <th>id</th>
             <th>buyer</th>
             <th>provider</th>
-            <th>totalSale</th>
-            <th>orderCode</th>
-            <th>date</th>
-            <th>saleCode</th>
+            <th>Date</th>
+            <th>total sale</th>
+            <th>discount</th>
+            <th>tax</th>
         </tr>
     </thead>
     <tbody>
@@ -30,11 +30,12 @@
             <td>{{ item.id }}</td>
             <td>{{ item.buyer }}</td>
             <td>{{ item.provider }}</td>
-            <td>{{ item.totalSale }}</td>
-            <td>{{ item.orderCode }}</td>
             <td>{{ item.date }}</td>
-            <td>{{ item.saleCode }}</td>
+            <td>{{ item.totalSale }}</td>
+            <td>{{ item.discount }}</td>
+            <td>{{ item.tax }}</td>
             <td><a href="{{ url_for('orderDetails.homeByOrderId', orderId=item.id) }}">add details</a></td>
+            <td><a href="{{ url_for('orders.delete', orderId=item.id) }}">delete</a></td>
             <td>
                 {% if item.date == None %}
                 <a href="{{ url_for('orders.finalize', id=item.id) }}">finalize</a>

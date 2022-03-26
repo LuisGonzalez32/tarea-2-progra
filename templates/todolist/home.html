@@ -17,8 +17,6 @@
 <br>
 
 
-{% for userItem in userList %}
-<a href="{{ url_for('todolist.tasklist', userId=userItem.id) }}">{{ userItem.username }}</a><br>
-{% endfor %}
+
 
 {% endblock %}

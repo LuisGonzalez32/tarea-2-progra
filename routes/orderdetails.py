@@ -11,7 +11,8 @@ orderDetails = Blueprint("orderDetails", __name__, url_prefix="/orderDetails")
 @orderDetails.route("/")
 @login_required
 def home():
-    return render_template("orderDetails/home.html", user=current_user)
+    orderDetailList = OrderDetail.query.all()
+    return render_template("orderDetails/all.html", user=current_user, items=orderDetailList)
 
 
 @orderDetails.route("/<int:orderId>")
@@ -63,3 +64,13 @@ def createByOrderId(orderId):
         db.session.commit()
         return redirect(url_for("orderDetails.homeByOrderId", orderId=orderId))
     return render_template("orderDetails/create.html", form=form, user=current_user, orderId=orderId)
+
+
+@orderDetails.route("/delete/<int:orderId>")
+@login_required
+def delete(orderId):
+    currentOrder = OrderDetail.query.filter_by(id=orderId).first()
+    db.session.delete(currentOrder)
+    db.session.commit()
+    return redirect(url_for("orderDetails.home"))
+

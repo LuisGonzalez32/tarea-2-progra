@@ -21,25 +21,26 @@ def create():
     form = OrderCreateForm()
     if form.validate_on_submit():
         buyer = form.buyer.data
-        provider = form.provider.data
-        orderCode = form.orderCode.data
-        saleCode = form.saleCode.data
-        newOrder = Order(buyer, provider, orderCode, saleCode)
+        provider = current_user.username
+        total = form.totalSale.data
+        discount = form.discount.data
+        tax = form.tax.data
+        total = total - (total * (discount/100))
+        totalSale = total + (total * (tax/100))
+        print(totalSale)
+        newOrder = Order(buyer, provider, totalSale, discount, tax)
         db.session.add(newOrder)
         db.session.commit()
         return redirect(url_for("orders.home"))
     return render_template("orders/create.html", form=form)
 
 
-# http://127.0.0.1:5000/orders/finalize/1
-@orders.route("/finalize/<int:id>")
+@orders.route("/delete/<int:orderId>")
 @login_required
-def finalize(id):
-    currentOrder = Order.query.get(id)
-    currentDate = date.today().isoformat()
-    currentOrder.date = currentDate
-    # db.session.add si ocupas un objeto completamente nuevo hace un insert
-    # db.session.add si ocupas un objeto modificado hace un update
-    db.session.add(currentOrder)
+def delete(orderId):
+    currentOrder = Order.query.filter_by(id=orderId).first()
+    db.session.delete(currentOrder)
     db.session.commit()
     return redirect(url_for("orders.home"))
+
+
